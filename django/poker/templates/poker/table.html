@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    {% comment %} <link rel="stylesheet" type="text/css" href="styles.css"> {% endcomment %}
+    <title>table</title>
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <textarea id="poker-log" cols="100" rows="20"></textarea><br>
+        <input id="poker-message-input" type="text" size="100"><br>
+        <input id="poker-message-submit" type="button" value="Send">
+        {{ table_name|json_script:"table-name" }}
+    </main>
+    <footer>
+    </footer>
+    <script>
+        const tableName = JSON.parse(document.getElementById('table-name').textContent);
+
+        const pokerSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/poker/table/'
+            + tableName
+            + '/'
+        );
+
+        pokerSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#poker-log').value += (data.message + '\n');
+        };
+
+        pokerSocket.onclose = function(e) {
+            console.error('poker socket closed unexpectedly');
+        };
+
+        document.querySelector('#poker-message-input').focus();
+        document.querySelector('#poker-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#poker-message-submit').click();
+            }
+        };
+
+        document.querySelector('#poker-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#poker-message-input');
+            const message = messageInputDom.value;
+            pokerSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>
