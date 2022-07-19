@@ -1,11 +1,18 @@
 # Django Scrum Poker
 
-create a `.env` file with a `SECRET_KEY`
-<!-- TODO move to settings -->
-
-`export ENVIROMENT='develop'; ./manage.py runserver`
+# development
+run `./manage.py runserver`
 
 use `localhost:8000/poker`
 
-# development
+# requirements
+## development
 python==3.8.10
+black==22.6.0
+channels==3.0.5
+Django==4.0.6
+
+## production
+channels==3.0.5
+Django==4.0.6
+

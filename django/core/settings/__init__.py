@@ -1,6 +1,6 @@
 from .base import *
 
-ENVIROMENT = os.environ.get("ENVIROMENT")
+ENVIROMENT = os.environ.get("ENVIROMENT", "develop")
 
 if ENVIROMENT=="develop":
     from .develop import *
