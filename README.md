@@ -5,6 +5,8 @@ run `./manage.py runserver`
 
 use `localhost:8000/poker`
 
+add a `django/core/settings/local.py` for custom local configs
+
 # requirements
 ## development
 python==3.8.10

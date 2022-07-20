@@ -1,6 +1,9 @@
 # python
 **/__pycache__/
 
+# django
+**/settings/local.py
+
 # editors
 .vscode
 
